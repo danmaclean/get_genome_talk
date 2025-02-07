@@ -1,0 +1,411 @@
+---
+title: "Free Computers!*"
+author: "Dan MacLean"
+subtitle: "*Terms and Conditions may apply"
+format: 
+  revealjs:
+    theme: simple
+---
+
+
+## This talk
+
+Discussing some options in 'free' computing resources in bioinformatics
+
+::: {.notes}
+The main aim of my talk is going to be discussing some options in open and free resources that you can use to get your genomics analysis done. I hope to give you an overview of these and some ideas on how to move forward.
+:::
+
+
+## Not This Talk
+
+Best Practice Guide to Bioinformatics Analyses
+
+
+::: {.notes}
+By way of demonstration I will be doing some quick analyses on tiny datasets - but I don't want you to get the wrong idea - the demo's will be to show you how the resources work and explicitly not the best practice for any of the analyses - they'll be deliberately quick and dirty. Best Practice is for another talk.
+:::
+
+## Free?
+
+  * Free as in 'free beer' (gratis)
+  * Trade offs in cost/performance
+  * Expertise still needed
+  
+::: {.notes}
+So, what do I mean by 'free', how are these resources free. Well they're gratis to borrow from latin, they're free in the sense of free beer. You can have them, but any headaches arising are yours to deal with. Some of them are completely free up to a point and costs come in as you scale up. The rates are generally quite cheap, though when you do start to incur charge and helpfully they can be paid for at point of use. There's no need to generate a large capital grant - you can pay for these as operational expenses when you need to.
+
+None of them is perfect and you need to pick your trade-offs. In particular I want you to realise that bioinformatics is hard, its a big set of skills and you do need to skill yourself up to do it. Every data analysis is different and each scientist is responsible for their work. That means that none of these solutions are one where you put your data in one end, press a big red button and the answer pops out. You still need to become expert with the things the tools you'll use are doing to your data, as it'll be you, not the computer that is responsible
+:::
+  
+## Pick Two
+
+  * Cheap
+  * Power
+  * Accessible
+
+::: {.notes}
+The tradeoffs we generally have are quite easy to think about. Given these three features - cheapness, power and accessibility - you can have any two. Picking two excludes the third. And thinking about them in those terms gives you a good idea about what you can do with each.
+:::
+
+## Three options
+
+  * Amazon Web Services (AWS)
+  * Galaxy (usegalaxy.org)
+  * Google Colab and Jupyter
+  
+::: {.notes}
+  Im going to discuss three resources. AWS which is a raw data centre solution; Galaxy, which is a graphical tool; and Jupyter on Google Colab, which falls in between both.
+:::
+  
+# AWS
+
+::: {.notes}
+First AWS
+:::
+
+## Amazon Web Services
+
+  * Cheap*, Power, ~~Accessible~~
+  
+  ![cbre.com](assets/datacentre_cbre.png){width="50%"}
+
+ *amazing value but always _some_ charge
+
+::: {.notes}
+Amazon Web Services is a service created by Amazon to take advantage of the huge economy of scale they have when purchasing computers and building data centres - if they're building huge data centres and buying millions of computers to run in them, why not by extra and rent out the bits they aren't using? That's the basis of it. If you need a temporary computer - you can rent it off Amazon. A completely blank computer with nothing on it, except a very minimal version of the Linux Operating System.
+
+This one is cheap you could get a full analysis done for the price of coffee and cake, and there is a lot of power available to you - companies like Netflix and Facebook use AWS for their own compute resource in their commercial products - but it is power user level stuff, so not the most accessible. 
+:::
+  
+## Amazon Web Services
+
+  * Command line based
+  * Only restriction is your knowledge 
+  
+  ![aws terminal](assets/aws_term.png)
+  
+::: {.notes}
+And so when you do sign up to AWS and pick a computer type (which is something of a trial in itself) then you have only a command line to go from. If you know what you're doing or you're prepared to climb that hill, then its a great solution.
+:::
+  
+# Galaxy
+
+  [https://usegalaxy.org]()
+
+::: {.notes}
+To the other end of the spectrum, now. With Galaxy.
+:::
+
+## A web tool for bioinformatics
+
+  * Cheap, ~~Power~~, Accessible
+  * Graphical user interface
+  * Low barrier to tool use
+  * Publicly available
+  
+[https://galaxyproject.org/](https://galaxyproject.org/)
+
+::: {.notes}
+Galaxy is a publicly accessible web-tool that allows you to upload your own data and run it through tools. It is fully point and click and publicly funded on both the development and hosting side. This means there are numerous instances of Galaxy, it exists at different web addresses and there are differences between them. Specifically, the set of tools at each is different, though they do overlap. The main Galaxy project page has lots of information about them.
+:::
+  
+## Galaxy Demo 
+
+  1. Perform sequence Quality Control
+      1. Upload some FASTQ reads
+      2. Run `FASTQC`
+      3. Examine output
+  2. Assemble PacBio Data
+      1. Get data from history
+      2. Run `minimap` and `miniasm`
+      3. Run `assemblystats`
+
+::: {.notes}
+Im going to run through how to use Galaxy briefly for a couple of use cases. First I'll upload some sequence reads and do a QC, this will be just a small data set.
+
+Second I'll run a longer Assembly pipeline, this will be a much larger PacBio data set but still relatively small.
+:::
+
+
+## The Main Page
+
+![usegalaxy.org](assets/galaxy_front_page.png){}
+
+::: {.notes}
+This is the main Galaxy front page at usegalaxy.org. We can see three vertical panels: that centre one is where the main interface will pop up, on loading there's nothing for it to do, so there's a set of adverts and acknowledgements. The guy you can see is James Taylor, who with Anton Nekrutenko founded the whole Galaxy Project. The rightmost vertical panel is called the history - this is where your data items - the ones that you upload and the ones that get spit out of computational jobs appear as little boxes. And the leftmost panel is the set of expandable menus that you can navigate through to find the tools and things you need.
+:::
+
+
+## Using Galaxy
+
+{{< video assets/single_history.mp4 height="850">}}
+
+::: {.notes}
+So let's have a quick look at getting some data into Galaxy and running a simple job.
+
+Starting with the upload of data from your computer, we click the upload button on the left and are presented with that dialogue box. We navigate to our file and click Start. The job queues and eventually runs. When its done we see it appear in the history as a new item. When it's green it's ready to use.
+
+We can click on the history item and on the eye icon to get a quick preview and we can see that these are indeed sequence reads.
+
+I can now pick a tool to use from the left panel. Im looking to do some quality control, so I pick that subsection and I'll use fastQC for a quick check.
+
+When I click the tool, it's options appear in the centre panel. The first option is usually which data set you want to work with - Galaxy has a concept of types and will only let you select a suitable input - which here is the sequences I uploaded. I'll use only defaults for this and click the Run Tool button when Im ready to go.
+
+Once thats done the jobs are submitted to the computers that Galaxy sits on and they stay grey while the job is in a queue waiting to run. They go yellow while the job runs and green when its done. 
+
+We can then inspect the output from the job. Here it has given us an appraisal of the very small dataset I analysed.
+:::
+
+## Workflows
+
+{{< video assets/g_workflow.mp4 height="850">}}
+
+:::{.notes}
+The next level in Galaxy is workflows and these are really useful if you want to build large pipelines for re-use and for sharing. This is the best bit of Galaxy as it's the feature that lets you make the computer work for you. 
+
+When you click the workflow option in the left pane, you can create a new workflow that presents you with this design space. Selecting tools from the list on the left - here Im selecting the assembler miniasm and aligner minimap - puts boxes representing them in the main pane. You can link inputs to outputs from each tool and chain them together by dragging this noodle thing. And you can build up tool chains this way. PacBio data usually comes as BAM files, so to run minimap and miniasm we need to extract the reads, which we can do with PacBio to fastx, so I'll add that and connect it up to the tools that need it.
+
+When we're happy we can run it or save it for reuse - here I'll reload a saved workflow for the task I've run before - and the workflow appears in the main panel. Selecting a data item for input in the first step and hitting run submits all the jobs, each of which will run when all its dependencies are complete and succesful.
+
+And that's that. Galaxy is pretty useful in that fixed toolset sense.
+:::
+  
+## Your Galaxy
+
+  * Possible to install Galaxy on
+      * Your own machine
+          * [https://galaxyproject.org/admin/get-galaxy/]()
+      * AWS
+      * Galaxy on AnVIL - (Commercial and Academic)
+          * [https://anvilproject.org/learn]()
+          * [https://anvilproject.org/learn/run-interactive-analyses/getting-started-with-galaxy]()
+
+::: {.notes}
+Finally for Galaxy, I just wanted to mention that as well as using Galaxy on public servers, it is possible to get your own private version - though there are admin hurdles. It can be installed on your own machine and cloud places like AWS, though you'd have to do these completely from scratch. There's also a containerised ready to go version for installation into the AnVIL service, which is a somewhat curated and managed bioinformatics cloud solution with different streams for commercial and academic users. So these could be worth a look.
+:::
+
+# Google Colab
+
+
+::: {.notes}
+The last resource I want to talk about it Google's colab (or colaboratory) offering.
+:::
+
+## Google Colab
+
+  * Cheap(-ish), Power(-ish), Accessible(-ish)
+  * A generous helping of RAM (usually 12-15 GB)
+  * A CPU with good processing power
+  * Access to a GPU (Graphics Processing Unit) for intensive calculations
+  * About 100 GB of temporary storage
+  * Temporary
+  
+  ![google.com](assets/colab_logo.jpg)
+
+
+::: {.notes}
+Colab is another cloud service that is based on top of Google's vast hardware. Generally all you need to access it is a free Google account and it will scale up when you put in your credit card. You can get access to large amounts of RAM, disk space and it links to your Google Drive making uploading etc easy. Colab has access to GPUs as well, meaning this is a favourite place for people to do AI and ML projects with. This one is probably the most equitable mix of our 'cheap, power, accessible' matrix. The power can come if you pay for it and a lot of the difficulty of dealing with files and uploading/connecting to the internet is reduced by Google providing nice integration with a GUI for file operations. You do still need some knowledge of command lines though if you're going to get anything done, but not too much system admin knowledge. There's one catch - this computer is temporary. After a 12 hours of use, or if you close your browser, your computer (or runtime in Google's jargon) will reset. This is why connecting to Google Drive is crucial. There is an option to buy more time and potentially incur more cost if you look into Google Cloud Marketplace for paid solutions.
+:::
+
+## Jupyter Notebooks
+
+Literate Computing
+
+  ![jupyter.org](assets/jupyterpreview.png)
+
+::: {.notes}
+
+The heart of colab is a tool called a Jupyter Notebook. This is one type of literate programming document in use in bioinformatics today. Almost all bioinformaticians worth their salt use these as a daily tool. You can see in the picture an example. A literate computing document is one that mixes normal text and pictures with computer code - you can see that here, in the top half of the picture you can see a text description of what is going to be done, and in the bottom you can see some code that implements it, with the executed code and results piped back into the document, so its a kind of reactive live document you can rationalise and execute with. It has it's own GUI for working with lots of stuff. 
+
+:::
+
+## Using Google Drive for Persistence
+
+```{.python}
+from google.colab import drive
+drive.mount('/content/drive')
+```
+
+::: {.notes}
+Because of the transient nature of the runtime, you need to connect a Google drive and stay organised, don't rely on the computer being there and save your notebooks and files to the persistent Google Drive. It's easy to link the drive, it takes a tiny bit of code. 
+:::
+
+
+## Installing software with package managers
+
+App stores for useful software
+
+![pypi.org](assets/package-dependency.png)
+
+::: {.notes}
+The next thing you'll need to be able to do is install the software you need to use. This is greatly simplified by using tools known as package managers. Packages are bundled up bits of software that know all about their dependencies - that is to say which other bits of software they rely on - and package managers can read that information and install all upstream components for you. The figure here is a graph of dependencies for a typical python package. As you can see it's quite complex and navigating it manually is quite a headache. Package managers are a bit of a lifesaver
+:::
+
+## Package Managers
+
+  * `apt`
+  * `pip`
+  * `conda`
+  * `bioconda`
+  
+::: {.notes}
+There are four package managers I want to talk about, apt, for system level software, pip, the standard python one, and conda and bioconda which are more for specific bioinformatics tools.
+:::
+
+## `apt`
+
+  * Colab runs Ubuntu, therefore update the system with `apt`
+  * For tools that seem fundamental to a computer:
+      * `gzip`
+      * `wget`
+      * system wide libraries: `libgcc`
+      * programming languages: `java` , `R`
+
+
+```{.bash}
+!apt-get update
+!apt-get install gzip wget
+```
+
+::: {.notes}
+The apt package manager is the system package manager on the operating system used on Colab. So you use apt to install system level packages - remember the computer is pretty minimal when you first get it, so if you need to extend its built in capability, apt is the way to go. You'd use this for programs that do everyday stuff like zipping files with `gzip` downloading with `wget`. You'd also use if for installing programming languages beyond the basic Python and Bash you get by default.
+
+There are a couple of examples at the bottom, there, which when entered in a Jupyter code cell will install gzip and wget.
+:::
+
+
+## `pip`
+  
+  * default for Python
+  * e.g. `!pip install biopython`
+  * limited to Python packages
+  
+::: {.notes}
+The next of these, pip is for Python packages, Jupyter is multi language, but Python comes first so this is a useful one to know. A lot of what you can do with Python isn't in the language but externally managed packages, for example biopython which provides a lot of useful bioinformatics related methods.
+:::
+
+  
+## `conda` and `bioconda`
+
+  * More powerful and general
+  * Swiss army knife for scientific software
+  * `Environments` prevent conflict
+  * `bioconda` special section of bioinformatics tools
+  * 7000 packages maintained by bioinformatics community
+  
+::: {.notes}
+Conda and the bioconda project which relies on it, is a very powerful and widely used package manager - it can install packages in any language and manages dependencies and conflicts using environments, allowing multiple versions of the same software to co-exist if you need that. Bioconda is a specialisation within conda that contains over 7000 bioinformatics tools and is maintained actively by the bioinformatics community. All the tools are easy to install and run. Virtually every bioinformatician uses conda and bioconda in some form or other
+:::
+
+## Installing `conda` and `bioconda`
+
+Install `conda` in a code cell:
+```{.python}
+!pip install -q condacolab
+import condacolab
+condacolab.install() # expect a kernel restart
+```
+
+Configure it to use `bioconda` as a package source:
+```{.bash}
+!conda config --add channels defaults
+!conda config --add channels bioconda
+!conda config --add channels conda-forge
+```
+
+Install the packages you want:
+```{.bash}
+!conda install fastqc samtools bcftools bwa
+```
+
+::: {.notes}
+Installing conda and bioconda is fairly straightforward - these are the installation instructions, basically in the first panel we download the python package that installs using pip, then load that and run the function that installs conda for colab. Note that a message telling us the system crashed is normal - this process needs the computer to restart
+
+In the second panel we configure conda to know about the bioconda channel where the bioinformatics tools are
+
+In the third panel we go ahead and install the actual tools, here samtools, blast and minimap.
+
+One thing to remember is that you'll need to do this every
+time you start a new runtime, remember the computer expires after a while so it needs rebuilding.
+:::
+
+## Google Colab Demo 
+
+  0. Setup machine
+      1. Install conda and bioconda
+      2. Install packages needed
+      3. Connect the GDrive
+  1. Perform sequence Quality Control
+      1. Extract Reads Uploaded Archive 
+      2. Run `FASTQC`
+      3. Examine output
+  2. Call Sequence Variants
+      1. Align reads to reference using `bwa`
+      2. Call variants with `samtools` and `bcftools`
+      3. Examine output
+      
+      
+      
+::: {.notes}
+This is the workflow I'll follow in the colab/Jupyter demo I'll give in a minute. Roughly we'll setup the machine with what it needs, then we'll do a FastQC to check some reads I've prepared and then call some variants using those reads. The origin of the reads doesn't really matter for a tech demo but they come from E.coli
+:::
+
+## Google Colab Demo 
+
+{{< video assets/colabend.mp4 height="850">}}
+
+::: {.notes}
+So here we see the colab Jupyter notebook. The main panel is on the right and the file browser that makes things a little easier is on the left.
+
+The notebooks are autosaved so the first thing I do is change the name.
+
+Then I'll start adding normal text - remember this is supposed to be a live analysis document, so I need to set out my intentions and assumptions and hypotheses before I start. This is great place to put a GOHRep for your work. Note how the editor autoformats - Im typing in a mini format called markdown which tells the text how to format. When I save the cell, it knows how to render the text. I can use the menus above the cell if I want, or if I need to add or delete new cells.
+
+Once I've done the outline I can move to the next step and describe that before I do it. I'll be installing conda using the Python package. This might seem pedantic, but its a kindness to your future self. Computer code is often write only so having the natural language there is a big help for reproducibility and resusability, even if it's just with yourself. 
+
+When Im ready to run, I can hit the play button. Any messages appear underneath and when the circle stops spinning the notebook is finished with that command and will move on.
+
+Next I mount my Google Drive by adding the Python package for that. It asks for some permissions and I accept them. And I get a new folder in the left pane representing my drive. (04:35)
+
+The next step is to extract the read data in my GDrive from the gzip format I received from my sequence provider. The extracted version is temp data and I don't care if it gets deleted, so I'll let it extract to the runtime. I can do this with the tar command. Note the start of the path is the mount place we were told about. (06:16)
+
+Now my data is ready, I'll install the tools I need. I'll add the channels to conda and do the installs. (08:16) (after click skip to 09:38)
+
+When the long install process finishes, I'll explain to myself the next step, FastQC to check the reads and run that on all the reads extracted. The output for fastQC is not text, its a webpage so I'll need to download those using the file browser and have a look. The reports look good, no real concerns for our purposes. (11:40)
+
+So with a result, I'll record my conclusion and my decision based on that conclusion in the next cell. 
+
+And then I'll write out my plan for the next steps, which is the alignment. (13:06)
+
+Note how I need to pay attention to the long paths to find my genome file in my GDrive for the indexing (14:13 when click happens)
+
+And again when I press play the cell runs and the system messages go to the screen. (14:22). Oops! looks like some program output is going to the screen too. Thats ok, I can stop the cell running and correct the mistake. Turns out I forgot to put an output file on there, so results went to the screen. I can rerun that. (15:25)
+
+
+When it's done I can run through the samtools steps for processing and sorting the alignment. (16:14)
+
+Then I can run the flagstats to check the quality of the alignment. Most of the reads mapped well so Im happy and can proceed.
+
+Again, this is a result and a decision point, so I make a record of that and my planned next action. (17:54)
+
+Now I can move on to the next stage and call the variants, again making the plan explicit. (19:58 skip to 20:23)
+
+(20:58, skip to 21:06)
+
+Finally I can record my result and have a look in the variants file, in place of actually examining it in this tech demo. We can see Indels and SNPs in these data. The left columns are the chromosome and position and the centre columns are the reference base and variant. 
+
+If we now want this file on our machine our our Gdrive, we can move it or download it. 
+
+:::
+
+## Summary
+
+  * There are free computers for bioinformatics analysis
+  * Three places to find them are AWS, Galaxy and Colab
+  * Each has its trade offs
+  * Colab is probably the best
+
+## Acknowledgements
+
+![](assets/gatsby.png)
